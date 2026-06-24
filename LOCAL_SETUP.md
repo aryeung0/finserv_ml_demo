@@ -30,14 +30,10 @@ pip install -r requirements.txt
      "account": "your_account.region",
      "user": "your_username",
      "password": "your_password",
-     "role": "STRAVA_DEMO_ADMIN",
-     "warehouse": "STRAVA_DEMO_WH",
-     "database": "STRAVA_DEMO_SAMPLE",
-     "schema": "STRAVA_MODEL_REGISTRY"
-   }
-   ```
-
-3. **Important**: `config.json` is gitignored and will never be committed!
+     "role": "FINSERV_DEMO_ADMIN",
+     "warehouse": "FINSERV_DEMO_WH",
+     "database": "FINSERV_FRAUD_DEMO",
+     "schema": "FINSERV_MODEL_REGISTRY"
 
 #### Option B: Using Environment Variables
 
@@ -46,10 +42,10 @@ Set these environment variables:
 export SNOWFLAKE_ACCOUNT="your_account.region"
 export SNOWFLAKE_USER="your_username"
 export SNOWFLAKE_PASSWORD="your_password"
-export SNOWFLAKE_ROLE="STRAVA_DEMO_ADMIN"
-export SNOWFLAKE_WAREHOUSE="STRAVA_DEMO_WH"
-export SNOWFLAKE_DATABASE="STRAVA_DEMO_SAMPLE"
-export SNOWFLAKE_SCHEMA="STRAVA_MODEL_REGISTRY"
+export SNOWFLAKE_ROLE="FINSERV_DEMO_ADMIN"
+export SNOWFLAKE_WAREHOUSE="FINSERV_DEMO_WH"
+export SNOWFLAKE_DATABASE="FINSERV_FRAUD_DEMO"
+export SNOWFLAKE_SCHEMA="FINSERV_MODEL_REGISTRY"
 ```
 
 #### Option C: Using Key Pair Authentication
@@ -71,14 +67,10 @@ export SNOWFLAKE_SCHEMA="STRAVA_MODEL_REGISTRY"
      "account": "your_account.region",
      "user": "your_username",
      "private_key_path": "/path/to/snowflake_key.p8",
-     "role": "STRAVA_DEMO_ADMIN",
-     "warehouse": "STRAVA_DEMO_WH",
-     "database": "STRAVA_DEMO_SAMPLE",
-     "schema": "STRAVA_MODEL_REGISTRY"
-   }
-   ```
-
-### 3. Update Notebook Connection Cells
+     "role": "FINSERV_DEMO_ADMIN",
+     "warehouse": "FINSERV_DEMO_WH",
+     "database": "FINSERV_FRAUD_DEMO",
+     "schema": "FINSERV_MODEL_REGISTRY"
 
 Modify the connection cell in each notebook to support both environments:
 
@@ -109,7 +101,7 @@ except:
 ## File Structure
 
 ```
-strava_ml_demo_git/
+finserv_ml_demo/
 ├── snowflake_connection.py    # Local connection helper
 ├── config.json.template        # Template for credentials
 ├── config.json                 # Your credentials (gitignored!)
@@ -118,7 +110,7 @@ strava_ml_demo_git/
 ├── requirements.txt            # Python dependencies
 ├── 01_env_setup.sql           # Run this in Snowflake first
 ├── 02_generate_and_load_data.ipynb
-├── 03_strava_ml_demo.ipynb
+├── 03_finserv_ml_demo.ipynb
 ├── 04_model_monitoring.ipynb
 └── 05_clean_up.ipynb
 ```

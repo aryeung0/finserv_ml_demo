@@ -43,10 +43,10 @@ def get_local_session():
             "account": config.get("account"),
             "user": config.get("user"),
             "password": config.get("password"),
-            "role": config.get("role", "STRAVA_DEMO_ADMIN"),
-            "warehouse": config.get("warehouse", "STRAVA_DEMO_WH"),
-            "database": config.get("database", "STRAVA_DEMO_SAMPLE"),
-            "schema": config.get("schema", "STRAVA_MODEL_REGISTRY")
+            "role": config.get("role", "FINSERV_DEMO_ADMIN"),
+            "warehouse": config.get("warehouse", "FINSERV_DEMO_WH"),
+            "database": config.get("database", "FINSERV_FRAUD_DEMO"),
+            "schema": config.get("schema", "FINSERV_MODEL_REGISTRY")
         }
         
         # If using key pair authentication
@@ -76,10 +76,10 @@ def get_local_session():
             "account": os.getenv("SNOWFLAKE_ACCOUNT"),
             "user": os.getenv("SNOWFLAKE_USER"),
             "password": os.getenv("SNOWFLAKE_PASSWORD"),
-            "role": os.getenv("SNOWFLAKE_ROLE", "STRAVA_DEMO_ADMIN"),
-            "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE", "STRAVA_DEMO_WH"),
-            "database": os.getenv("SNOWFLAKE_DATABASE", "STRAVA_DEMO_SAMPLE"),
-            "schema": os.getenv("SNOWFLAKE_SCHEMA", "STRAVA_MODEL_REGISTRY")
+            "role": os.getenv("SNOWFLAKE_ROLE", "FINSERV_DEMO_ADMIN"),
+            "warehouse": os.getenv("SNOWFLAKE_WAREHOUSE", "FINSERV_DEMO_WH"),
+            "database": os.getenv("SNOWFLAKE_DATABASE", "FINSERV_FRAUD_DEMO"),
+            "schema": os.getenv("SNOWFLAKE_SCHEMA", "FINSERV_MODEL_REGISTRY")
         }
     
     # Validate required parameters
