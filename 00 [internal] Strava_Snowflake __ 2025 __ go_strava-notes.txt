@@ -1,0 +1,838 @@
+﻿`  
+Name
+	Title
+	Team
+	Notes
+	Hannah Persampieri
+	Engineering Manager, Data Platform
+	Data Platform
+	
+
+	Elyse Kolker Gordon
+	Sr Director of Engineering
+	
+
+	
+
+	Kathryn Evans
+	Engineering Director
+	AI
+	
+
+	
+
+	
+
+	
+
+	
+
+	Use Cases in pursuit
+	Team
+	Detail / Notes
+	AI ML
+	
+
+	
+
+	dbt
+	
+
+	
+
+	
+
+	
+
+	
+
+	
+
+Account Team Top Of Mind
+	* * Preso: dbt projects in snowflake
+* Share: Snowflake optimizer prototype
+* Preso: Summit in 60 to be scheduled
+* Meeting: Data Science + ML preso with Katy's team
+* HOL: AI 
+
+
+	
+
+
+
+
+
+
+
+
+
+TEMPLATE
+
+
+Attendees:
+
+
+Action items from meeting:
+* 
+
+Meeting notes
+* 
+
+FYIs
+* 
+
+
+
+
+
+________________
+
+
+Sep 8, 2025 Bi-weekly
+
+
+2026 Focus on Scaling & Latency: Hannah's top priority for 2026 is improving operational scaling and reducing pipeline latency. She feels they are underutilizing Snowflake's capabilities ("driving a Ferrari 30 mph") and plans to work with James to leverage features like dynamic tables and clustering.
+
+
+Near-Term (Q4 2025) Focus on Cost & Warehouses: A more immediate project, likely starting in October, is to tackle warehouse right-sizing and improve team cost attribution. This is driven by the fact that most jobs currently run on a single, large warehouse, making it difficult to manage costs and performance.[a]
+
+
+Data Cataloging: They are moving forward with Atlan for their data catalog, with a goal of onboarding before the end of the year.
+
+
+Action Items: Kevin agreed to follow up with Hannah around January 2026 to discuss scaling features and to help with the warehouse right-sizing project in the near term (starting around October).
+*  “How do we use Snowflake in 2026? We’ve been indexed in self service.” 
+
+
+Arnold to research if there’s a Dynamic Table HoL
+
+
+Meeting notes
+* Hannah and James talked about data scaling, the way snowflake is used they’re not using the large table features. Feels like having a Ferrari but only driving it 25mph. Things like Dynamic Tables. Aim for January.
+   * Improve Latency - using Stream objects
+      * Pipeline is complicated in nature, for example subscriptions (there’s internal, getting from Apple and Google, which are inefficient pipelines) 
+      * There’s no common data model, there’s a lot of re-computing the same things.
+   * Being more aware of what they have in the pipeline
+   * Focusing on self service (where can i find XYZ)
+      * Squeezing Atlan, onboarding this year
+   * More lightweight efficient pipelines
+* Role Based Access Control is being rolled out, had some P0 bugs.
+   * Not planning on using our PS for now, not the best use of budget at the moment
+* Right Sizing warehouses
+   * Team Cost attribution will start in october
+   * Want to review the landscape of warehouses
+* Tableau, Amplitude
+
+
+
+
+
+
+Sep 8, 2025 Internal demo build notes
+Arnold notes:
+Build an end-to-end ML pipeline using Notebooks.
+1. Embed images in markdown to show screenshots of slides?
+2. Feature Store UI? Model Registry UI?
+3. Add charts to show things like distribution of feature and training values?
+4. Any Streamlit ideas?
+5. While we show the E2E, we should mention how a hybrid approach would work
+   1. Feature engineering in snowflake
+   2. Data Retrieval via Snowpark API to their own training platform
+   3. Training on their own platform
+   4. Snowpark API to log the trained model files (with metrics, parameters, versions)
+   5. Inference in Snowflake
+   6. They continue using their in house training platform
+   7. Feature store and model registry are governed by snowflake
+   8. Inference in snowflake which brings model to data, faster and more efficient
+Aug 21, 2025 Intro with Katy
+Katy, Hannah | Arnold, Kevin, Lucy
+Recording
+Passcode: 7*jB7!FJ
+
+
+Katy wants to learn about ML dev lifecycle. 
+Objective:
+1. Streamline the Model dev lifecycle, and monitoring the lifecycle
+2. Platformization around model building, training, deploying, instead of one-off.
+
+
+The ML team is new and small, about 10-15 people, 15 models in production. Classical ML model building as well as GenAI solutions.
+The platform work wise, they just started building 6 months ago or so. 
+
+
+Pain points:
+Consistency, no feature store solution yet, no vector data store solution.
+Any overarching architecture. 
+Have built out the training platform.
+
+
+These problems = dev overhead, it slows them down (not blocked in core) but are losing dev efficiency.
+
+
+Current tool:
+SageMaker on and off, in house training platform. Using their own Airflow and lamina jobs to support training workflows.
+
+
+Current ML:
+Classical ML: Social recommendations, feeds, follow friend rec, performance of fitness (how fast can you run), geospatial for the routes and maps (recommendations), is the activity what you say it is (run vs bike). Some regressions and classification as well.
+GenAI: API calls to externally generated
+
+
+Lucy: is the current home grown solution satisfactory and scalable or would you be interested in.
+
+
+Serving and Inference would be a different solution set for us.
+The training is currently being done, Lucy’s view is it may not be the most cost effective.
+
+
+Topics of interest:
+* *Data Centralization
+* *Model versioning (has an internal solution coming, but most interested in seeing what snowflake has)
+* *Feature Store (interested in seeing what snowflake has)
+* *Model registry
+* *Inference scaling (has internal server compute allocated, not sure how much want to shift over to external provider like snowflake)
+* GPU functionality
+* Data Science agent - they’re pretty happy with the current solution (free)
+* AI coding dev tools (not cursor)
+* Training - not sure how much interest to shift to external
+* Inferences - there’s interest
+   * “End to end” potentially.
+* Notebooks - not much interest for paid solution since free local
+
+
+Lucy mentions showcasing an end to end ML workflow.
+
+
+There’s not a lot of outbound movement from snowflake back into prod. Snowflake is kind of being used as a read-only.
+
+
+The entire data pipeline is orchestrated in Airflow.
+Uses Grafana for o11y.
+
+
+Next step:
+* Send materials the *’s plus inference
+* Come up with use case for model registry and feature store – but it’d have a cortex angle.
+
+
+
+
+Arnold think on what use case we can demo on around Cortex:
+1. Leaderboard Fraud Detection with Anomaly Detection
+   1. Using the CORTEX.ANOMALY_DETECTION function?
+      1. The output is a new column (e.g., is_anomalous). Maybe tie this to the Feature Store?
+2. Route Recommendations with Cortex Search
+   1. CORTEX.EMBED_TEXT() to create a vector embedding, then CORTEX.SEARCH for natural language search like SELECT route_id FROM routes WHERE CORTEX.SEARCH(comments, 'beautiful morning run with lots of shade').
+3. Social Feed Moderation and User Summaries
+   1. Use CORTEX.CLASSIFY to train a zero-shot classifier that categorizes posts in real-time. 
+      1. Classify posts by intent (e.g., Race Report, Gear Question, Injury Commiseration) or by safety (Spam, Inappropriate, Safe).
+   2. CORTEX.SUMMARIZE to create a summary of a user’s interest
+4. Sentiment Analyses on route comments
+   1. Analyze user-submitted comments on different routes to gauge athlete sentiment, helping identify which routes are most loved or might have issues (e.g., poor conditions, safety concerns). SNOWFLAKE.CORTEX.SENTIMENT(comment_text)
+
+
+—-- Meeting with Lucy —--
+Think of an ML example, focus on these:
+*Model versioning
+*Feature Store
+*Model registry
+
+
+Within the first 90 days there’s likely the most churn, route recommendations maybe helpful:
+1. Current location of user
+2. Data input
+3. Connect to apple watch
+   1. Recommend a route based on the data in my apple health
+4. Look at the routes within a certain radius
+
+
+Scoring system of routes
+1. Elevation changes
+2. Average speed
+3. Average duration
+4. User feedbacks
+5. Terrain
+6. User id
+7. User rating (frequent runner, contributor)
+8. Is the route bike only or runners
+
+
+Classify using ML and show the end-to-end VS using cortex
+
+
+1. Get dummy data from AI (then use generate synthetic data function)
+2. Use cursor to build this out
+3. Maybe make the data slightly unclean so we can show cleansing
+4. Build features
+5. Classification model (decision tree, random forest, etc.)
+6. Show training of the model
+
+
+
+
+—- Zoom Transcript summarized —
+Meeting Summary: AI/ML Discovery with Katy Evans
+* Date: August 8, 2025
+* Attendees:
+   * Strava: Katy Evans (Director of Engineering, AI), Hannah Persampieri (Engineering Manager, Data Platform)
+   * Snowflake: Arnold Yeung (Solutions Engineer), Kevin Murphy (Account Executive), Lucy Martin (Solutions Engineer, ML Specialist)
+* Objective: To introduce Snowflake's AI/ML capabilities to Katy, understand her team's current ML development lifecycle, identify key challenges, and explore potential areas for collaboration.
+Key Discussion Points
+Strava's ML Landscape
+* Team & Maturity: The ML team is relatively new and small, with about 10-15 people. They have roughly 15 models in production.
+* Focus: The team is currently focused on "platformization"—building consistent tooling and infrastructure around the model lifecycle, a process they started in the last six months.
+* Use Cases: Their models span classical ML and GenAI.
+   * Classical ML: Includes social recommendations (feed, followers), performance predictions (e.g., race time estimates), geospatial route recommendations, and activity classification (e.g., run vs. bike).
+   * GenAI: Currently consists of API calls to external models.
+Current Architecture & Challenges
+* Tooling: The team has built an in-house training platform using their own Airflow and Laminar jobs. They previously used AWS SageMaker but have migrated off it.
+* Pain Points: The primary challenge is a lack of standardized infrastructure, leading to developer overhead and inefficiency. Key missing pieces include:
+   1. A centralized Feature Store.
+   2. A formal Model Versioning solution and Model Registry.
+   3. A consistent, overarching ML architecture.
+* Snowflake's Role: Snowflake is currently used as a read-only, offline data store. Hannah noted there is very little data movement from Snowflake back into production systems.
+Topics of Interest & Next Steps
+* High Interest: Katy expressed the most immediate need for solutions around Feature Store and Model Versioning/Registry. These are "known short-term problems" they are actively looking to solve.
+* Conditional Interest: There is some interest in Snowflake for inference, but Katy noted they have significant internal compute resources. The value would depend on the benefits of an end-to-end solution combined with the feature store and registry.
+* Low Interest: The team is happy with their current free, local solutions for notebooks and training and is not looking for a paid alternative.
+
+
+
+
+Aug 21, 2025 Sync with Hannah
+* Top of mind thought exercise for Hannah + Leadership: “With increased MAU, where can things break?”
+
+
+Warehouse improvements (Gen2, adaptive WH to rightsize compute)
+She doesnt think she’s using snowflake the way it can be used. Dynamic table, materialized views.
+We are offering HOL.
+Need from Hannah: Content, attendees
+
+
+James and Kyle are in charge of the dbt stuff. They’re going to host their own Core. 
+
+
+Atlan - finalizing contract. No need for help yet but will reach out to us.
+
+
+DBT core: What it looks like integrated with Snowflake to have same observability across the board.
+
+
+Katy’s team looks after both AI and ML. Daniel only looks after only ML, reports to Katy.
+
+
+Katy, Chen and Elyse at the same level, all reporting to Rob.
+
+
+Aug 5, 2025 Top User James Kinney
+Started 2 months ago. On the Data Team, more an analytics team. He’s a foundational role to help Hannah’s team
+building tools, doing DQ.
+https://www.linkedin.com/in/jamesrkinney/
+
+
+The main task:
+* Using Sculp (like dbt) for transformation. Hannah’s team gets somewhat raw data into Snowflake. This team uses Sculp to transform raw tables.
+   * Some might be specific to a dashboard, some for DS training.
+* Building features for ML folks. Trying to move to a feature store. Evaluate Feast (open source)
+   * The DS team is doing non-real time inference like subscription, churn, clustering users. This team is 1 person right now and hiring 2 more. Nhu is the name of the data scientist.
+   * The ML team does like race time prediction, etc. the 2 teams dont share features.
+* Working on Subscription data, refactoring, lots of duct tape fixes. One table does all transformations, trying to break that up. Doing joins as they go.
+   * Have Data Quality be testable. 
+* Data Catalog
+   * Currently using Amundsen, looking to buy one
+   * Numbers and calculations not matching up
+
+
+Priority:
+1. Data Quality around subscriptions.
+   1. Applying specific test like unique
+   2. For example users on specific device, we want active users but app is just open in the background. Want context on tables, change log, why things were done. 
+2. Data Catalog may quickly become priority once settle on a vendor
+   1. Pretty far along with Atlan VS dbt, not necessary to look at Snowflake catalog.
+
+
+Arnold to share:
+* Dbt projects
+* Workspaces + notebooks, esp git integration
+* Data metric functions
+* Copilot
+* Feature Store?
+
+
+Arnold to research:
+* Do our dbt projects support dbt data quality
+* Messaged Jeremiah for guidance around dbt
+Aug 5, 2025 Top Users Nina 
+SNOW: Arnold, Kev
+Strava: Nina Patel https://www.linkedin.com/in/nina-patel-35014056/
+Lead for acct management and operations
+Born and raised in Germany, lived in Ireland the past 19 years.
+Account mgmt and execution. High touch. Is that bad or good for Nina’s team?
+KM IDEAS:
+Handling Massive Data Volumes: "Strava for Business" team to analyze data without it being slow or expensive dealing with global campaigns and millions of users.
+Reduced Engineering Bottlenecks: Does Nina rely on other teams for data?
+Connecting Disparate Data: Connect that to other data sources, like data from the sponsoring brands, user demographics, and marketing campaign data. Snowflake's platform allows them to consolidate all this information in one place, creating a "single source of truth."
+Data Clean Rooms: securely collaborate with its business partners (e.g., the sponsoring brands) on data without exposing any sensitive PII. measure campaign effectiveness and proving ROI while maintaining user privacy.
+
+
+Works a lot with partners like Nike, Meta, Instagram. There are no active ads in Strava but these partners come to host Sponsor Challenges.
+There’s no self serve BI dashboards. They manually run queries to provide insights to these partners during the “Challenges” and post-challenge.
+
+
+Metrics of the team:
+1. Retention of partners
+2. Revenue Goals (team number)
+3. Timely execution of challenges
+4. Track SLAs of recaps (5-7 biz days post challenges)
+   1. More real time is wanted
+5. Self serve reporting
+   1. No more black box
+
+
+Suggestions:
+1. START HERE: 
+   1. She mentioned worksheets are messy, we can show notebooks and workspaces
+   2. Copilot
+2. THEN: 
+   1. Data Clean Room + sharing
+   2. Conversational bot
+   3. Streamlit App
+
+
+
+
+Jul 31, 2025 Bi-weekly
+SNOW: Arnold, Kev
+Strava: Hannah P
+
+
+Strava acquired Runna, they’re working on bringing the data together. They’re looking to get just a few tables first, getting their subscribers, where to upsell.
+
+
+Hannah will intro us to Katy Evans. Daniel Huang was Hannah’s boss until beginning of the year. Daniel Huang reports to Katy. ML became own vertical.
+
+
+Talking to dbt tomorrow.
+
+
+
+
+
+
+
+
+Done in this meeting:
+* Dbt brief preso and demo
+   * Hannah liked it and will share with internal team who’s responsible. Potential next step to demo to broader team.
+* Usage Optimizer Streamlit App
+   * Hannah also liked it, will send me a couple of her ideas to add
+
+
+Jul 17, 2025 | Bi-weekly
+SNOW: Arnold, Kev
+Strava: Hannah P
+
+
+Action items from meeting:
+* 
+
+Meeting notes
+
+
+* Top of mind for Hannah
+   * Asks from ML
+      * Big things
+         * Build a vector store and Hannah’s team is responsible for this.
+            * Arnold to get an ML team member to come do more discovery, could Snowflake be the primary vector store by leveraging the VECTOR data type and Cortex Search? Arnold shared 2 docs links
+         * Modernizing and scaling infra (SPARK) 
+   * Snowplow tracks user behavior
+   * 2026 Planning starts in Oct. Hannah team doesn’t have direct TPM support
+   * Q4’25 planning starts in Sept.
+
+   * Followups from onsite needed from Strava
+   * Intro to Kathryn Evans needed: 
+   * Chen T. wishlist
+   * Summit in 60
+   * Then ML Edu Session (yes, now)
+   * Then Hands on Lab (later ~3months)
+
+
+FYIs
+   * 
+
+Katy’s team uses snowflake to do a lot of offline training of models.
+
+
+They’re looking at Atlan for catalog.
+They’re talking to dbt, still deciding between cloud vs core. Arnold brought up dbt projects inside snowflake.
+
+
+James is a DQ engineer in Chen’s org. Will own a lot of the dbt work[b]. Will take over a lot 
+Jeechee Chen will be a new data engineer on Hannah’s team.
+
+
+Elyse is a giants and valkyrie fan.
+
+
+Strava / Marketing Team / Copilot / Nina Patel
+Strava / Marketing Team / Notebooks+Workspaces / Nina Patel
+
+
+Strava / Data Engineering / Feature Store / James Kinney
+Strava / Data Engineering / Workspaces+Notebooks / James Kinney
+
+
+
+
+
+
+________________
+
+
+
+
+Outstanding AIs
+   * Snowpark v. Lambda cost estimation: Strava is moving stuff to lambda to transform and then moving back into snowflake. They like the idea of just doing all of it in snowpark. Need to understand data volume, any cross region charges in consideration, any warehouses they are spinning up to extract/load data.  
+   * Hannah May/June top goals:
+   * RBAC: Intro to PS&T Rich G.
+   * Team level cost attribution.
+   * Better Support for ML and Other Stakeholders (Marketing Technology)
+   * Blocked until SE[c]: Kevin schedule a discovery session specifically focused on their AI/ML workloads, and updated architecture (good since new person is joining).
+   * Infra resiliency
+   * Blocked until SE: [d]Kevin find strategies for optimizing their Kafka-to-Snowflake pipeline and rightsizing their data ingestion.
+   * Kevin post-Summit share relevant customer case studies, architectural blueprints, and whitepapers that address similar challenges (especially around optimizing storage and structure for diverse workloads).pecially around optimizing storage and structure for diverse workloads).
+   * Pick a POC: Identify one or two of the most pressing issues (e.g., Kafka event type scaling with specific Protobufs, or optimizing the compressed data ingestion) and propose a focused POC.
+   * Hannah share team OKRs when ready
+
+
+________________
+
+
+Jun 23, 2025 | Architecture review @ Strava
+SNOW: Arnold, Nidhi, Kev
+Strava: Hannah P, Elyse
+
+
+KM notes to hit:
+   * Ingress/egress w/ current ML setup 
+   * Snowpark v. Lambda cost estimation: Strava is moving stuff to lambda to transform and then moving back into snowflake. They like the idea of just doing all of it in snowpark. Need to understand data volume, any cross region charges in consideration, any warehouses they are spinning up to extract/load data. 
+   * Followups
+   * Summit in 60 menu to Elyse and Hannah
+   * Host Si6 with their invites
+   * ML Summit in 60 with Chen
+   * Wishlist from Chen
+   * Hands on Lab - KM to check w/ Alex
+   * Recap this meeting to Strava
+
+
+Arnold Notes:
+
+
+Arnold notes: 
+Meeting Summary
+The meeting between the Snowflake team (Kevin, Arnold, Nidhi) and the Strava team (Hannah, Elyse) provided a comprehensive overview of Strava's current data infrastructure, tooling, and future aspirations, particularly in the realm of machine learning and cost management.
+Strava operates on AWS (US-East-1) and utilizes a three-tiered database structure in Snowflake (STRAVA_RAW, STRAVA_OPEN, STRAVA_SECURE) to manage raw, aggregated, and PII data, respectively. Their data ingestion is transitioning towards a streaming architecture, primarily using MSK (AWS Managed Kafka) for server-side events and Snowpipe via Snowplow for client-side events.
+Key opportunities for Snowflake to provide value include optimizing their large-scale data operations, introducing advanced ML capabilities like Cortex and feature stores, enhancing observability and cost management, and potentially replacing their custom templating tool, Sculpt, with dbt. The Strava team expressed strong interest in ML applications, AI-powered observability, and understanding cost drivers within Snowflake.
+Attendees
+   * Snowflake: Kevin, Arnold, Nidhi
+   * Strava: Hannah (Data Engineering), Elyse
+Detailed Notes
+1. Strava's Data Engineering & Infrastructure
+   * Team Structure: The Data Engineering team is currently lean, with one new member, James, who is focused on data modeling for consumption and supports the BI team.
+   * Snowflake Usage: James is already using auto-clustering, indicating a good foundational knowledge of Snowflake. Hannah's team manages the raw data ingestion and transformation, handling Kafka connectors and ensuring data lands correctly in the STRAVA_RAW database.
+   * Database Structure:
+   * STRAVA_RAW: Ingests all raw data.
+   * STRAVA_OPEN: Downstream database with non-PII, aggregated data.
+   * STRAVA_SECURE: Downstream database containing PII and other sensitive data.
+   * Note: There is currently no dynamic data masking being implemented directly within Snowflake.
+   * Cloud & Region: Strava is on AWS, specifically in the us-east-1 region.
+2. Data Sources & Ingestion
+   * Client-Side User Behavior: Instrumented via Snowplow, capturing all in-app interactions. They are in the process of migrating from batch S3 updates to streaming ingestion using Snowpipe.
+   * Server-Side Events: Emitted from their ~40 microservices (e.g., Goals, Maps, Routing). These are streamed via AWS Managed Kafka (MSK). These microservices currently live in their own bespoke infrastructure, not within Snowflake.
+   * Third-Party Integrations:
+   * Webhooks (Iterable, Branch): Data from martech tools is routed through Kafka for non-analytics use cases.
+   * Other 3rd Party Data (e.g., Social): Ingested using Fivetran.
+3. Tooling & Current Workflows
+   * Orchestration & Transformation:
+   * Airflow: Self-hosted for managing infrastructure, including Kubernetes clusters.
+   * Sculpt: A homegrown, free tool used for templating and parameterizing jobs (described as a less powerful dbt). Analysts use Sculpt to define and execute jobs that interact with Snowflake. The long-term plan is to replace Sculpt with dbt.
+   * Snowflake Opportunity: Nidhi mentioned dbt Projects within Snowflake as a potential future solution.
+   * Data Processing:
+   * Spark: Used for large-scale data aggregation and querying data that resides in Snowflake. It is deployed on self-managed Kubernetes clusters in AWS. They appreciate the version control capabilities within their current setup.
+   * Snowflake Opportunity: They have not yet explored performing these large-scale jobs directly within Snowflake.
+   * BI & Analytics Tools:
+   * Amplitude: Widely used by analysts.
+   * Tableau: A self-hosted instance.
+   * Other Connections: Eppo (experimentation), Hubifi (revenue reporting), and Hightouch (for Iterable connection) connect to Snowflake, primarily via JDBC/ODBC.
+4. Key Areas of Interest & Opportunities
+   * Machine Learning & AI:
+   * Current State: Strava has limited AI/ML implementation. One example is "Athlete Intelligence," which provides short, language-based summaries of runs.
+   * Needs & Interests:
+   * Hannah's team is responsible for building the ML infrastructure for other teams. They are very interested in setting up ML pipelines in Snowflake.
+   * Elyse is focused on common ML patterns and use cases in Snowflake, such as anomaly and fraud detection.
+   * They are interested in how to manage unstructured data like heart rate streams. Nidhi suggested exploring Snowflake's feature store and ML pipeline capabilities.
+   * AI Chatbot: Hannah noted a common internal challenge is finding information about data ("Where is it? How is it used?"). They are building a Slack bot on top of Confluence and would be interested in incorporating Snowflake data, presenting an opportunity for Cortex Analyst.
+   * Openflow (seen at Summit) and the Semantic Layer were also mentioned as points of interest.
+   * Cost Management & Optimization:
+   * Current Process: Hannah monitors costs monthly using a custom spreadsheet built from various queries to track trends. They also have team-by-team budgets.
+   * Pain Points & Needs:
+   * Understanding unexpected cost spikes (e.g., month-end storage increases).
+   * Automating auditing and monitoring processes.
+   * Right-sizing warehouses: Hannah, coming from a Redshift background, is keen to learn best practices. This is an opportunity to discuss adaptive warehouses.
+   * Understanding the cost implications of large, infrequently queried tables.
+   * Observability:
+   * Elyse identified observability as one of their most significant challenges.
+   * They are interested in using AI to improve observability and want to learn about any Snowflake features in this area.
+   * Snowflake Opportunity: Nidhi shared a slide on AI Observability. An expert demo could be valuable.
+5. Consumption & Security
+   * Recent Consumption Drop: Hannah attributed a recent drop in consumption to moving from Snowpipe to their own Kafka implementation a few months ago, citing cost as the primary driver. She felt Snowpipe wasn't designed for their specific data patterns.
+   * Security: A new Head of Security recently joined. While security projects are not the highest priority at the moment, they are on the radar for Q4.
+   * Snowflake Opportunity: Nidhi's suggestion of using Reader Accounts could be integrated into a future RBAC project.
+Arnold raw notes here.
+Jun 18, 2025 Meet with Hannah re RBAC and PS
+SNOW: Deep, Rich, Arnold, Kevin, Chris K
+Strava: Hannah P
+
+
+There’s PII, everything was in a single database. Now migrating to financial data, athlete and non athlete data, with schemas that represent different level of data.
+
+
+There’s an analytics roles, several service account roles like airflow.
+Using Okta groups, wondering how to map them into snowflake roles, whats the right level of granularity and access etc.
+
+
+Cloning prod and dev databases nightly.
+
+
+Chris recommending granting permissions at schema level instead of per user.
+Hannah says they’re doing things by data mart which maps fairly nicely to product teams.
+
+
+Trying to reduce the IT manual overhead when providing access. Want users to get provisioned access pretty automatically. They get assigned to okta groups, starting with a viewer role. 
+
+
+Their access control in snowflake is a lot more granular than AWS today (AWS infra team is working on it).
+
+
+Hannah asked about the access staleness check, Chris answered.
+
+
+Rich talked about high level the 2 engagement models (scoped vs RSA)
+Hannah has an engineering resource assigned for this. 
+
+
+The first phase is RBAC, not doing masking or row level access yet.
+Rich mentions that we can add an education component to the engagement.
+
+
+
+
+
+
+Jun 17, 2025 Internal sync on RBAC
+Arnold, Kevin
+Rich Gonzales - Practice Manager
+Deep Gill - new practice manager (4 weeks in)
+Chris Kite - Sr PS Consultant
+
+
+In the session tomorrow:
+   1. Start with an overview of PS
+   1. Credit usage for PS?
+   2. Chris will come up with a scoping session, it’ll translate into a cost structure.
+   1. 1 way is a project based with a start and finish and limited scopes
+   2. 2nd way is an RSA who stays with the account and guide in all areas (bigger commitment). Lasts 6 months with hours allocated per week to.
+   3. Typically the resources without an SOW contract are arms-length away.
+   2. Talk about the 4 topics from May16 notes below
+
+
+
+
+Jun 11, 2025Arnold + Yi internal disc
+   1. Yi did not have any correspondence with them
+   2. Support issues
+   3. Architecture discussion next
+   1. Latest architecture doc.
+   4. Horizon
+   1. We could loop in the PM to understand her requirements
+   5. MySQL replication slowness
+   1. Discuss what tools they’re using
+   1. MySQL connector? Use Openflow?
+
+
+Jun 5, 2025 | Summit’25 Kevin:Hannah | Followup email to HP sent 6/9
+
+   * Attended Optimize storage costs using Storage Lifecycle Policies
+   * KM: Send HP followup info on this. In PrPr now.
+   * Blog post to send to HP followup
+   * Documentation.
+   * HP Role: Stakeholder to marketing, finance, HR, etc for all data needs.
+   * Strava had data eng team offsite (~50ppl) this week. We should get into this next time.
+   * Chen Teel had lots of feedback on Weds session. 
+   * KM: followup with CT on what she liked, if she wants followups etc
+   * KM+AY: organize a summit in 60 for Strava.
+   * Arnold Notes:
+   * Hannah said catalog and governance is front and center, her manager is considering Atlan but Hannah is suggesting internally that they take a look at Horizon first because it keeps the catalog in the same platform as the data.
+   * We can push the benefits of having RBAC on the catalog, zero metadata and data movement, never out of sync between catalog and data
+   * She mentioned that there’s a bunch of MySQL instances that are being synced into snowflake, but because the application allows users to modify historical data (i.e. change the privacy on a jogging record from 10 years ago), the change data capture needs to look back pretty far; the sync jobs take a long time. Wants to know if there’s a better way.
+
+
+
+May 22, 2025 | Meeting summary for Strava / Snowflake - Intros - Chen Teel
+Quick recap
+The meeting focused on exploring Snowflake's Cortex capabilities and their potential integration into Strava's data analytics and machine learning workflows. Discussions covered various aspects of Cortex, including its AI features, machine learning functions, and cost-effectiveness compared to existing AWS-based systems. The participants also explored potential collaboration between teams and the possibility of integrating Snowflake with SageMaker for machine learning workloads.
+
+
+Next steps
+Chen to research Snowflake's Cortex capabilities and their potential value for the data analytics team.
+Chen to discuss with team members about their knowledge and potential use cases for Snowflake's Cortex functions.
+Snowflake team to send Chen links and documentation about Snowflake's feature store capabilities.
+Chen to consider arranging a hands-on training session or demo on Snowflake's feature store functionality.
+Chen to evaluate the possibility of implementing a model registry in Snowflake after more data scientists join the team.
+Snowflake team to send Chen information about relevant Cortex sessions at the upcoming Snowflake Summit.
+Chen to provide Snowflake team with an overview of the data analytics team's goals for the coming years.
+
+May 22, 2025 | HP email on her H2 goals and KM where Snow can help
+Granular, Role-Based Access Control (RBAC):
+      * Support team of 25 analysts. Pulling metrics for comms, press, etc. 
+      * And then there’s everyone else with the same “analytics” role.
+      * Gearing up for IPO and there’ll be increased focus and scrutiny on governance.
+      * Chen Teel cares about…
+      * Data catalog
+      * Lineage
+      * Data science and understanding how we can help on ML modeling
+
+
+May 16, 2025 | Hannah + Data Engineerings H2 goals
+      1. Granular, Role-Based Access Control (RBAC):
+      * Current State: Most employees with Snowflake access get a broad "ANALYTICS" role, granting wide access to data.
+      * Goal: Implement a "principle of least privilege" access model where users can only see the data they absolutely need. This is being supported by separating PII from non-PII data into different schemas.
+      * Snowflake's Potential Role:
+      * RBAC Features: Are you already using Snowflake's role based access control (e.g. custom roles with specific privileges on databases, schemas, tables, views, columns, ...)?
+      * Data Masking & Row Access Policies: Implement dynamic data masking and row-level security to control data visibility at a granular level for different roles.
+      * Secure Views: Create secure views to expose only necessary data subsets to specific user groups.
+
+         2. Team-Level Cost Attribution:
+         * Goal: Attribute expensive or inefficient Snowflake jobs to specific teams to improve cost posture and model AWS resource usage tracking. This includes developing push-modeled cost alerting for inefficient jobs.
+         * Snowflake's Potential Role:
+         * Query Tagging & Resource Monitors: Use query tagging to associate queries with specific teams or projects. Use resource monitors to track credit consumption by warehouse and set limits or alerts.
+         * Account Usage Views: Use Snowflake's ACCOUNT_USAGE schema (e.g., QUERY_HISTORY, WAREHOUSE_METERING_HISTORY) to analyze query costs and attribute them to users, roles, or warehouses that can be mapped to teams.
+         * Performance Optimization Guidance: We can provide insights into optimizing queries and warehouse configurations to reduce costs. Hopefully we've done this for you previously.
+         3. Better Support for ML and Other Stakeholders (Marketing Technology):
+         * Current State: Data pipelines are primarily optimized for analytics, not ideal for ML or Marketing Tech.
+         * Goal (ML): Productionize PySpark for ML use cases and build an online feature store.
+         * Goal (Marketing Tech): Reduce the nearly day-long delay in syncing updated athlete attributes to Iterable (via Hightouch) for communications. Exploring CDP solutions.
+         * Snowflake's Potential Role:
+         * Snowpark for Python/Java/Scala: Are you planning on having ML teams run PySpark and other ML workloads directly within Snowpark? This would keep data and compute together for efficiency and governance.
+         * HP: We're definitely considering using Snowpark directly - I am working with ML right now to get a better sense of their use case, but we do believe we have some places we'd like to utilize Snowpark for them regardless. A big example of this is decoding data sent by our Scala services - right now we have an external lambda function that is called to do this decoding (we set this up prior to Python UDFs)  - and we think using Snowpark instead would be a great option, so that may springboard us into other use cases.
+         * Stream Processing (Snowpipe Streaming, Streams & Tasks): Improve data ingestion and latency for syncs w/ Snowpipe Streaming for low-latency ingestion and Streams & Tasks.
+         4. Improving Infrastructure Resiliency:
+         * Current State: Current methods for replicating MySQL databases from AWS and some event infrastructure are not resilient enough and have struggled with unanticipated increases in event volume.
+         * Goal (H2): Explore alternatives to existing infrastructure for better efficiency and resilience in event collection and database replication.
+         * Snowflake's Potential Role:
+         * Database Replication & Failover: Use Snowflake’s native database replication features for disaster recovery.
+         * Partner Ecosystem for CDC: Use partner tools for Change Data Capture (CDC) from MySQL to Snowflake, providing more robust and near real-time replication compared to batch methods. I can go find some for you.
+
+
+May 8, 2025 | Strava:Snowflake bi-weekly
+Attendees: Hannah P, Kevin
+
+
+Action items from meeting
+         * Kevin send Summit invites to Hannah to pass along.
+         * Kevin to wait on Sigma intro. 
+         * Help Hannah with her “plan paper” for the year
+         * Kevin schedule a discovery session specifically focused on their AI/ML workloads, and updated architecture (good since new person is joining).
+         * Kevin find strategies for optimizing their Kafka-to-Snowflake pipeline and rightsizing their data ingestion.
+         * Kevin offer a workshop or best practices session on "Optimizing AWS to Snowflake Connectivity & Data Flow."
+         * Kevin share relevant customer case studies, architectural blueprints, and whitepapers that address similar challenges (especially around optimizing storage and structure for diverse workloads).
+         * Hannah share team OKRs when ready
+         * Pick a POC: Identify one or two of the most pressing issues (e.g., Kafka event type scaling with specific Protobufs, or optimizing the compressed data ingestion) and propose a focused POC.
+
+
+Notes
+         * Reporting
+         * Hannah reports to horizontal platform team but stakeholder is: 
+         * New Sr Director of Data analytics, data science
+Core Challenges & Objectives:
+         1. AI/ML Model Performance & Data Integration:
+         * Challenge: Current AI/ML models utilize Snowflake data, but there's a lack of comprehensive understanding of their performance across all interconnected systems.
+         * Goal: Gain better visibility and understanding of how AI/ML models are performing holistically.
+
+            2. Serving Internal Stakeholders (Engineers & Communications):
+            * Need: Improve how data and insights are provided to other engineering teams and for communication purposes.
+
+               3. Event Replication & Kafka Scalability:
+               * Challenge: Heavy reliance on Kafka for event replication is facing scalability issues with certain event types. This is partly due to a disconnect between engineering teams regarding what data is needed and what ultimately lands in the Data Warehouse (DW).
+               * Concern: The current "one-size-fits-all" approach to ingesting everything into Kafka is inefficient and not sensible for all use cases.
+               * Current Process Detail: Protobufs are being fired from the server-side.
+
+                  4. Data Ingestion & Processing into Snowflake:
+                  * Proposed Improvement (Storage Optimization): Allow compressed data to land directly in Snowflake and then run a job to decompress it within Snowflake.
+                  * Current Transition: Moving from bulk S3 uploads to Snowpipe streaming with a focus on implementing deduplication.
+                  * Key Question/Need (Pre-Snowflake Infrastructure): Guidance is needed on how to best connect AWS infrastructure changes to Snowflake. Specifically, "When I change this in AWS, how do I best connect this to Snowflake?"
+
+                     5. Architectural Best Practices & Optimization:
+                     * Need: Seeking "comparables for architecture" to understand best practices and optimizations, particularly regarding the trade-offs between data storage strategies and data structuring.
+
+                        6. Organizational Alignment:
+                        * Context: Operating with both team-level and organization-level OKRs (Objectives and Key Results). This context likely influences how these technical challenges are prioritized and resourced.
+
+Discovery
+                           * Focus, could you help me understand your perspective on this and where it fits into your prios?
+                           * What do you need from us?
+                           * Where have we missed?
+                           * What makes a good partner?
+                           * Have we done.. 
+                           * goal setting
+                           * architecture review (Fall 2024)
+                           * value engineering, etc. 
+
+
+FYIs
+                           * Hannah holding on moving forward with the below until her year plan is done.
+                           * Anomaly Detection: Did reviewing the documentation spark any initial thoughts on how this might apply to your leaderboard cleanup, and/or financial fraud detection.
+                           * Consolidating Services data: I typically see initiatives like integrating app health/productivity metrics providing real benefits for dev teams (like faster troubleshooting, clearer performance picture). To ensure I'm aligned with your team's current focus, could you help me understand your perspective on this and where it fits into your prios?
+Apr 10, 2025 | Strava:Snowflake bi-weekly
+Attendees: Christian, Hannah P, Kevin
+
+
+Notes
+                           * Strava ML team is looking at anomaly detection
+                           * Use cases:
+                           * Leaderboard cleanup
+                           * Spam detection
+                           * They want more e.g. financial fraud detection.
+                           * Some of our meta data we’re noticing irregular behavior in our services.
+                           * Want to get more service level data into Snowflake e.g. productivity metrics around service health (“Strava is a micro services environment”).
+                           * The teams struggle with getting a holistic view with how the app is doing. Health and cost of infrastructure hygiene is disparate. Not a company priority but is for dev teams.
+                           * We want to do more data literacy in company.
+                           * Observability – Honeycomb is tracing vendor. Bad job at analyzing overall trends.
+                           * “Copy pasting in sheets”
+                           * Lineage. Hannah wants to turn this on for analytics team so they can cleanup their jobs. 
+                           * Amundsen being used. Open sourced, and forked. Data catalogues.
+                           * Strava struggling with headcount.
+                           * Services:
+                           * Activities
+                           * Follows
+                           * Kudos
+                           * Rendering maps
+                           * Clubs
+                           * “Should we maintain in things like ‘Segment effort’ in snowflake vs MySQL”
+
+
+FYIs
+                           * 
+Action items / Pitch opptys
+                              * Pitch data catalogues
+                              * Anomaly detection use cases
+                              * Holistic view of Micro services.
+                              * “Lineage”
+[a]@arnold.yeung@snowflake.com AI for us is to connect with James on ideas and best practices here. 
+
+
+Do you want ot take a stab at draft to him with Hannah on CC?
+[b]DIscovery w/ him is ok via Quin. He has opinions on where Strava should go.
+[c]@arnold.yeung@snowflake.com
+[d]@arnold.yeung@snowflake.com
+_Assigned to arnold.yeung@snowflake.com_

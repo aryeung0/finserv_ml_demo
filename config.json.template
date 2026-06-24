@@ -1,0 +1,17 @@
+{
+  "_comment": "Copy this file to config.json and fill in your credentials",
+  "_note": "config.json is gitignored for security",
+  
+  "account": "YOUR_ACCOUNT.REGION",
+  "user": "YOUR_USERNAME",
+  "password": "YOUR_PASSWORD",
+  "role": "STRAVA_DEMO_ADMIN",
+  "warehouse": "STRAVA_DEMO_WH",
+  "database": "STRAVA_DEMO_SAMPLE",
+  "schema": "STRAVA_MODEL_REGISTRY",
+  
+  "_comment_key_pair": "Optional: Use key pair authentication instead of password",
+  "private_key_path": "/path/to/your/private_key.p8",
+  "private_key_passphrase": "optional_passphrase_if_encrypted"
+}
+

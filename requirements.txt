@@ -1,0 +1,19 @@
+# Snowflake Core
+snowflake-snowpark-python>=1.11.0
+snowflake-ml-python>=1.5.0
+snowflake-connector-python>=3.0.0
+
+# ML and Data
+pandas>=2.0.0
+numpy>=1.24.0
+scikit-learn>=1.3.0
+matplotlib>=3.7.0
+
+# Security (for key pair authentication)
+cryptography>=41.0.0
+
+# Jupyter (for local notebook development)
+jupyter>=1.0.0
+ipykernel>=6.25.0
+nbformat>=5.9.0
+
