@@ -1,4 +1,4 @@
-# Finserv ML Demo - Payment Fraud Detection
+# Finserv Fraud Demo - Payment Fraud Detection
 
 **End-to-End Machine Learning Platform Demo**
 
@@ -58,7 +58,7 @@ Fraud rate: ~4-8% (higher for e-commerce and travel merchants)
 
 3. **Run notebooks in order:**
    - `02_generate_and_load_data.ipynb` - Generate and load synthetic data
-   - `03_finserv_ml_demo.ipynb` - Main ML demo
+   - `03_finserv_fraud_demo.ipynb` - Main ML demo
    - `04_model_monitoring.ipynb` - Model performance tracking
    - `05_clean_up.ipynb` - Reset demo environment
 
@@ -68,7 +68,7 @@ Fraud rate: ~4-8% (higher for e-commerce and travel merchants)
 |---|---|
 | `01_env_setup.sql` | Create Snowflake database, schemas, tables, roles |
 | `02_generate_and_load_data.ipynb` | Generate 10k transactions and load to Snowflake |
-| `03_finserv_ml_demo.ipynb` | Main demo: Feature Store, Model Registry, Inference, Cortex |
+| `03_finserv_fraud_demo.ipynb` | Main demo: Feature Store, Model Registry, Inference, Cortex |
 | `04_model_monitoring.ipynb` | Model performance tracking and drift detection |
 | `05_clean_up.ipynb` | Reset demo environment |
 | `demo_script.md` | SE demo script with talking points and discovery questions |
@@ -78,7 +78,7 @@ Fraud rate: ~4-8% (higher for e-commerce and travel merchants)
 ## Snowflake Objects Created
 
 - **Database**: `FINSERV_FRAUD_DEMO`
-- **Warehouse**: `FINSERV_DEMO_WH` (XSmall, auto-suspend 150s)
+- **Warehouse**: `STANDARD_WH_01_XS` (XSmall, auto-suspend 150s)
 - **Schemas**:
   - `RAW_DATA` - Source tables
   - `FINSERV_FEATURE_STORE` - Feature Store schema

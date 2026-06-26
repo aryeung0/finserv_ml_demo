@@ -31,7 +31,7 @@ pip install -r requirements.txt
      "user": "your_username",
      "password": "your_password",
      "role": "FINSERV_DEMO_ADMIN",
-     "warehouse": "FINSERV_DEMO_WH",
+     "warehouse": "STANDARD_WH_01_XS",
      "database": "FINSERV_FRAUD_DEMO",
      "schema": "FINSERV_MODEL_REGISTRY"
 
@@ -43,7 +43,7 @@ export SNOWFLAKE_ACCOUNT="your_account.region"
 export SNOWFLAKE_USER="your_username"
 export SNOWFLAKE_PASSWORD="your_password"
 export SNOWFLAKE_ROLE="FINSERV_DEMO_ADMIN"
-export SNOWFLAKE_WAREHOUSE="FINSERV_DEMO_WH"
+export SNOWFLAKE_WAREHOUSE="STANDARD_WH_01_XS"
 export SNOWFLAKE_DATABASE="FINSERV_FRAUD_DEMO"
 export SNOWFLAKE_SCHEMA="FINSERV_MODEL_REGISTRY"
 ```
@@ -68,7 +68,7 @@ export SNOWFLAKE_SCHEMA="FINSERV_MODEL_REGISTRY"
      "user": "your_username",
      "private_key_path": "/path/to/snowflake_key.p8",
      "role": "FINSERV_DEMO_ADMIN",
-     "warehouse": "FINSERV_DEMO_WH",
+     "warehouse": "STANDARD_WH_01_XS",
      "database": "FINSERV_FRAUD_DEMO",
      "schema": "FINSERV_MODEL_REGISTRY"
 
@@ -101,7 +101,7 @@ except:
 ## File Structure
 
 ```
-finserv_ml_demo/
+finserv_fraud_demo/
 ├── snowflake_connection.py    # Local connection helper
 ├── config.json.template        # Template for credentials
 ├── config.json                 # Your credentials (gitignored!)
@@ -110,7 +110,7 @@ finserv_ml_demo/
 ├── requirements.txt            # Python dependencies
 ├── 01_env_setup.sql           # Run this in Snowflake first
 ├── 02_generate_and_load_data.ipynb
-├── 03_finserv_ml_demo.ipynb
+├── 03_finserv_fraud_demo.ipynb
 ├── 04_model_monitoring.ipynb
 └── 05_clean_up.ipynb
 ```

@@ -1,4 +1,4 @@
-# Finserv ML Demo - SE Demo Script
+# Finserv Fraud Demo - SE Demo Script
 
 ## Demo Overview
 
@@ -32,7 +32,7 @@ Set the scene before opening any notebooks:
 
 ### 2. Data and Feature Engineering (5 min)
 
-Open `03_finserv_ml_demo.ipynb`. Run or show:
+Open `03_finserv_fraud_demo.ipynb`. Run or show:
 
 - **Table check cell**: "We have 10,000 transactions, 2,000 customers, and 500 merchants. This mirrors a real payment environment."
 
